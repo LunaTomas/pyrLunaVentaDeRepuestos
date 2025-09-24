@@ -28,9 +28,9 @@ namespace pyrLunaVentaDeRepuestos
             rdbNacionalConsulta.Enabled = false;
             rdbImportadoConsulta.Enabled = false;
             btnConsultar.Enabled = false;
-            cmbMarcaConsulta.Items.Add("(P) Peugeot");
-            cmbMarcaConsulta.Items.Add("(F) Fiat");
-            cmbMarcaConsulta.Items.Add("(R) Renault");
+            cmbMarcaConsulta.Items.Add("(P)");
+            cmbMarcaConsulta.Items.Add("(F)");
+            cmbMarcaConsulta.Items.Add("(R)");
         }
         private void cmbMarca_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -121,6 +121,22 @@ namespace pyrLunaVentaDeRepuestos
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
+            //verificar que no se pasen de 100 repuestos
+            if (contador >= 100) //puse 5 en lugar de 100 para probar y me funcionó
+            {
+                MessageBox.Show("No se pueden agregar más repuestos. El límite es de 100.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+                btnGuardar.Enabled = false;
+            }
+            //no guardar si esta repetido el numero de repuesto para la misma marca y origen
+            for (int i = 0; i < contador; i++)
+            {
+                if (repuestos[i].Contains(cmbMarca.Text) && repuestos[i].Contains(txtNumero.Text))
+                {
+                    MessageBox.Show("El número de repuesto ya existe para la marca y origen seleccionados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
             //guardar los datos
             marca = cmbMarca.Text;
             //guardar el origen
@@ -132,10 +148,10 @@ namespace pyrLunaVentaDeRepuestos
             {
                 origen = "(I) Importado";
             }
-            numero = int.Parse(txtNumero.Text);
+            //parse para convertir el texto a numeros
+            numero = int.Parse(txtNumero.Text); //int para el numerico
             descripcion = txtDescripcion.Text;
-            //convertir el precio a float
-            precio = float.Parse(mskPrecio.Text);
+            precio = float.Parse(mskPrecio.Text); //float para numeros con decimales porque es dinero
             //guardar los datos en el array
             repuestos[contador] = marca + " " + origen + " " + numero + " " + descripcion + " " + precio;
             contador++;
