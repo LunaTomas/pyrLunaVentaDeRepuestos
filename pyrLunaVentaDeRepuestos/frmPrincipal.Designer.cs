@@ -274,7 +274,7 @@
             // 
             // lstConsultas
             // 
-            lstConsultas.Font = new Font("Segoe UI", 15.75F);
+            lstConsultas.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lstConsultas.FormattingEnabled = true;
             lstConsultas.ItemHeight = 30;
             lstConsultas.Location = new Point(6, 196);

@@ -213,6 +213,11 @@ namespace pyrLunaVentaDeRepuestos
                     lstConsultas.Items.Add(repuestos[i]);
                 }
             }
+            //mostrar error si no hay repuestos que coincidan con la consulta
+            if (lstConsultas.Items.Count == 0)
+            {
+                MessageBox.Show("No se encontraron repuestos que coincidan con la consulta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
