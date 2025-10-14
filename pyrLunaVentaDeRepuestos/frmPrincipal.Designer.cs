@@ -54,11 +54,20 @@
             cmbMarcaConsulta = new ComboBox();
             lblMarcaConsulta = new Label();
             lblOrigenConsulta = new Label();
+            tbpGrilla = new TabPage();
+            dgvGrilla = new DataGridView();
+            Column1 = new DataGridViewTextBoxColumn();
+            Column2 = new DataGridViewTextBoxColumn();
+            Column3 = new DataGridViewTextBoxColumn();
+            Column4 = new DataGridViewTextBoxColumn();
+            Column5 = new DataGridViewTextBoxColumn();
             grpDatosRepuestos.SuspendLayout();
             tbcVentanas.SuspendLayout();
             tbpDatos.SuspendLayout();
             tbpConsultas.SuspendLayout();
             grpConsultar.SuspendLayout();
+            tbpGrilla.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvGrilla).BeginInit();
             SuspendLayout();
             // 
             // lblMarca
@@ -228,6 +237,7 @@
             // 
             tbcVentanas.Controls.Add(tbpDatos);
             tbcVentanas.Controls.Add(tbpConsultas);
+            tbcVentanas.Controls.Add(tbpGrilla);
             tbcVentanas.Location = new Point(12, 12);
             tbcVentanas.Name = "tbcVentanas";
             tbcVentanas.SelectedIndex = 0;
@@ -350,6 +360,51 @@
             lblOrigenConsulta.TabIndex = 2;
             lblOrigenConsulta.Text = "Origen";
             // 
+            // tbpGrilla
+            // 
+            tbpGrilla.Controls.Add(dgvGrilla);
+            tbpGrilla.Location = new Point(4, 24);
+            tbpGrilla.Name = "tbpGrilla";
+            tbpGrilla.Padding = new Padding(3);
+            tbpGrilla.Size = new Size(343, 430);
+            tbpGrilla.TabIndex = 2;
+            tbpGrilla.Text = "Grilla";
+            tbpGrilla.UseVisualStyleBackColor = true;
+            // 
+            // dgvGrilla
+            // 
+            dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5 });
+            dgvGrilla.Location = new Point(6, 6);
+            dgvGrilla.Name = "dgvGrilla";
+            dgvGrilla.Size = new Size(331, 409);
+            dgvGrilla.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            Column1.HeaderText = "Marca";
+            Column1.Name = "Column1";
+            // 
+            // Column2
+            // 
+            Column2.HeaderText = "Origen";
+            Column2.Name = "Column2";
+            // 
+            // Column3
+            // 
+            Column3.HeaderText = "Numero";
+            Column3.Name = "Column3";
+            // 
+            // Column4
+            // 
+            Column4.HeaderText = "Precio";
+            Column4.Name = "Column4";
+            // 
+            // Column5
+            // 
+            Column5.HeaderText = "Descripcion";
+            Column5.Name = "Column5";
+            // 
             // frmPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -368,6 +423,8 @@
             tbpConsultas.ResumeLayout(false);
             grpConsultar.ResumeLayout(false);
             grpConsultar.PerformLayout();
+            tbpGrilla.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dgvGrilla).EndInit();
             ResumeLayout(false);
         }
 
@@ -398,5 +455,12 @@
         private RadioButton rdbImportado;
         private RadioButton rdbNacional;
         private TextBox txtNumero;
+        private TabPage tbpGrilla;
+        private DataGridView dgvGrilla;
+        private DataGridViewTextBoxColumn Column1;
+        private DataGridViewTextBoxColumn Column2;
+        private DataGridViewTextBoxColumn Column3;
+        private DataGridViewTextBoxColumn Column4;
+        private DataGridViewTextBoxColumn Column5;
     }
 }
