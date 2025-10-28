@@ -6,17 +6,20 @@ namespace pyrLunaVentaDeRepuestos
         {
             InitializeComponent();
         }
-        //declaracion de variables
+        // Variables
         string marca;
         string origen;
         int numero;
         string descripcion;
         float precio;
-        string[] repuestos = new string[100]; //para cargar los repuestos
+        string[] repuestos = new string[100]; // para cargar los repuestos
         int contador = 0;
-        //nueva variable prueba
+
         string[,] matRespuesto = new string[100, 5];
         int indiceGrabar = 0;
+
+        string archivoRepuestos = "repuestos.txt"; // archivo de guardado
+
         private void frmPrincipal_Load(object sender, EventArgs e)
         {
             rdbNacional.Enabled = false;
@@ -25,113 +28,101 @@ namespace pyrLunaVentaDeRepuestos
             txtDescripcion.Enabled = false;
             mskPrecio.Enabled = false;
             btnGuardar.Enabled = false;
+
             cmbMarca.Items.Add("(P) Peugeot");
             cmbMarca.Items.Add("(F) Fiat");
             cmbMarca.Items.Add("(R) Renault");
+
             rdbNacionalConsulta.Enabled = false;
             rdbImportadoConsulta.Enabled = false;
             btnConsultar.Enabled = false;
+
             cmbMarcaConsulta.Items.Add("(P)");
             cmbMarcaConsulta.Items.Add("(F)");
             cmbMarcaConsulta.Items.Add("(R)");
-            //cargar datos de prueba
+
+            // cargar datos desde archivo si existe
+            if (File.Exists(archivoRepuestos))
+            {
+                string[] lineas = File.ReadAllLines(archivoRepuestos);
+                for (int i = 0; i < lineas.Length && i < 100; i++)
+                {
+                    string[] partes = lineas[i].Split(',');
+                    if (partes.Length == 5)
+                    {
+                        matRespuesto[i, 0] = partes[0]; // marca
+                        matRespuesto[i, 1] = partes[1]; // origen
+                        matRespuesto[i, 2] = partes[2]; // numero
+                        matRespuesto[i, 3] = partes[3]; // precio
+                        matRespuesto[i, 4] = partes[4]; // descripcion
+                        repuestos[i] = string.Join(" ", partes);
+                        dgvGrilla.Rows.Add(partes[0], partes[1], partes[2], partes[3], partes[4]);
+                        indiceGrabar++;
+                        contador++;
+                    }
+                }
+            }
+            // cargar datos de prueba siempre que se abra
             CargadorDatos();
             MessageBox.Show("Datos cargados.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //cargar en dgvGrilla de datos la matriz
-            for (int i = 0; i < 100; i++)
+            List<string> origenes = new List<string>();
+            List<string> listaMarcas = new List<string>();
+            for (int filas = 0; filas < matRespuesto.GetLength(0); filas++)
             {
-                if (matRespuesto[i, 0] != null) // Verifica que la fila no esté vacía
+                dgvGrilla.Rows.Add(matRespuesto[filas, 0],
+                matRespuesto[filas, 1],
+                matRespuesto[filas, 2],
+                matRespuesto[filas, 3],
+                matRespuesto[filas, 4]);
+                if (!listaMarcas.Contains(matRespuesto[filas, 0]))
                 {
-                    dgvGrilla.Rows.Add(matRespuesto[i, 0],
-                        matRespuesto[i, 1],
-                        matRespuesto[i, 2],
-                        matRespuesto[i, 3],
-                        matRespuesto[i, 4]);
+                    listaMarcas.Add(matRespuesto[filas, 0]);
+                }
+                if (!origenes.Contains(matRespuesto[filas, 1]))
+                {
+                    origenes.Add(matRespuesto[filas, 1]);
                 }
             }
         }
         private void cmbMarca_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbMarca.SelectedIndex != -1)
+            rdbNacional.Enabled = cmbMarca.SelectedIndex != -1;
+            rdbImportado.Enabled = cmbMarca.SelectedIndex != -1;
+
+            if (cmbMarca.SelectedIndex == -1)
             {
-                rdbNacional.Enabled = true;
-                rdbImportado.Enabled = true;
-            }
-            else
-            {
-                rdbNacional.Enabled = false;
-                rdbImportado.Enabled = false;
                 rdbNacional.Checked = false;
                 rdbImportado.Checked = false;
             }
         }
         private void rdbNacional_CheckedChanged(object sender, EventArgs e)
         {
-            if (rdbNacional.Checked == true)
-            {
-                txtNumero.Enabled = true;
-            }
-            else
-            {
-            txtNumero.Enabled = false;
-            txtNumero.Clear();
-            }
+            txtNumero.Enabled = rdbNacional.Checked;
+            if (!rdbNacional.Checked) txtNumero.Clear();
         }
         private void rdbImportado_CheckedChanged(object sender, EventArgs e)
         {
-            if (rdbImportado.Checked == true)
-            {
-                txtNumero.Enabled = true;
-            }
-            else
-            {
-                txtNumero.Enabled = false;
-                txtNumero.Clear();
-            }
+            txtNumero.Enabled = rdbImportado.Checked;
+            if (!rdbImportado.Checked) txtNumero.Clear();
         }
         private void txtNumero_KeyPress(object sender, KeyPressEventArgs e)
         {
-            // Permite que solo los números se escriban en el TextBox
             if (!char.IsNumber(e.KeyChar) && e.KeyChar != (char)Keys.Back)
-            {
-
-                e.Handled = true; // Cancela la pulsación de la tecla si no es un número o la tecla Backspace
-            }
+                e.Handled = true;
         }
         private void txtNumero_TextChanged(object sender, EventArgs e)
         {
-            if (txtNumero.Text.Length > 0)
-            {
-                txtDescripcion.Enabled = true;
-            }
-            else
-            {
-                txtDescripcion.Enabled = false;
-                txtDescripcion.Clear();
-            }
+            txtDescripcion.Enabled = txtNumero.Text.Length > 0;
+            if (!txtDescripcion.Enabled) txtDescripcion.Clear();
         }
         private void txtDescripcion_TextChanged(object sender, EventArgs e)
         {
-            if (txtDescripcion.Text.Length > 0)
-            {
-                mskPrecio.Enabled = true;
-            }
-            else
-            {
-                mskPrecio.Enabled = false;
-                mskPrecio.Clear();
-            }
+            mskPrecio.Enabled = txtDescripcion.Text.Length > 0;
+            if (!mskPrecio.Enabled) mskPrecio.Clear();
         }
         private void mskPrecio_TextChanged(object sender, EventArgs e)
         {
-            if (mskPrecio.Text.Length > 0)
-            {
-                btnGuardar.Enabled = true;
-            }
-            else
-            {
-                btnGuardar.Enabled = false;
-            }
+            btnGuardar.Enabled = mskPrecio.Text.Length > 0;
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -139,14 +130,13 @@ namespace pyrLunaVentaDeRepuestos
         }
         private void btnGuardar_Click(object sender, EventArgs e)
         {
-            //verificar que no se pasen de 100 repuestos
-            if (contador >= 100) //puse 5 en lugar de 100 para probar y me funcionó
+            if (contador >= 100)
             {
                 MessageBox.Show("No se pueden agregar más repuestos. El límite es de 100.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
                 btnGuardar.Enabled = false;
+                return;
             }
-            //no guardar si esta repetido el numero de repuesto para la misma marca y origen
+            // verificar duplicados
             for (int i = 0; i < contador; i++)
             {
                 if (repuestos[i].Contains(cmbMarca.Text) && repuestos[i].Contains(txtNumero.Text))
@@ -155,105 +145,87 @@ namespace pyrLunaVentaDeRepuestos
                     return;
                 }
             }
-            //guardar los datos
+            // guardar datos
             marca = cmbMarca.Text;
-            //guardar el origen
-            if (rdbNacional.Checked == true)
-            {
-                origen = "(N) Nacional";
-            }
-            else
-            {
-                origen = "(I) Importado";
-            }
-            //parse para convertir el texto a numeros
-            numero = int.Parse(txtNumero.Text); //int para el numerico
+            origen = rdbNacional.Checked ? "(N) Nacional" : "(I) Importado";
+            numero = int.Parse(txtNumero.Text);
             descripcion = txtDescripcion.Text;
-            precio = float.Parse(mskPrecio.Text); //float para numeros con decimales porque es dinero
-            //guardar los datos en el array
-            repuestos[contador] = marca + " " + origen + " " + numero + " " + descripcion + " " + precio;
+            precio = float.Parse(mskPrecio.Text);
+
+            // guardar en matriz
+            matRespuesto[indiceGrabar, 0] = marca;
+            matRespuesto[indiceGrabar, 1] = origen;
+            matRespuesto[indiceGrabar, 2] = numero.ToString();
+            matRespuesto[indiceGrabar, 3] = precio.ToString();
+            matRespuesto[indiceGrabar, 4] = descripcion;
+            indiceGrabar++;
+
+            // guardar en vector de repuestos
+            repuestos[contador] = string.Join(" ", marca, origen, numero, descripcion, precio);
             contador++;
-            //borrar los datos de los controles
+
+            // agregar a DataGridView
+            dgvGrilla.Rows.Add(marca, origen, numero, precio, descripcion);
+
+            // guardar en archivo
+            GuardarEnArchivo();
+
+            // limpiar controles
             cmbMarca.SelectedIndex = -1;
             txtNumero.Clear();
             txtDescripcion.Clear();
             mskPrecio.Clear();
-            //mensaje de guardado exitoso
+
             MessageBox.Show("Repuesto guardado.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //esto lo hizo el profe para probar la matriz
+        }
+        // guardar matriz en archivo
+        private void GuardarEnArchivo()
+        {
+            using (StreamWriter sw = new StreamWriter(archivoRepuestos))
             {
-                matRespuesto[indiceGrabar, 0] = "marca";
-                matRespuesto[indiceGrabar, 1] = "origen";
-                matRespuesto[indiceGrabar, 2] = "numero";
-                matRespuesto[indiceGrabar, 3] = "precio";
-                matRespuesto[indiceGrabar, 4] = "descripcion";
-                indiceGrabar++;
+                for (int i = 0; i < indiceGrabar; i++)
+                {
+                    if (!string.IsNullOrEmpty(matRespuesto[i, 0]))
+                    {
+                        sw.WriteLine(string.Join(",", matRespuesto[i, 0], matRespuesto[i, 1],
+                            matRespuesto[i, 2], matRespuesto[i, 3], matRespuesto[i, 4]));
+                    }
+                }
             }
         }
         private void cmbMarcaConsulta_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (cmbMarcaConsulta.SelectedIndex != -1)
+            rdbNacionalConsulta.Enabled = cmbMarcaConsulta.SelectedIndex != -1;
+            rdbImportadoConsulta.Enabled = cmbMarcaConsulta.SelectedIndex != -1;
+
+            if (cmbMarcaConsulta.SelectedIndex == -1)
             {
-                rdbNacionalConsulta.Enabled = true;
-                rdbImportadoConsulta.Enabled = true;
-            }
-            else
-            {
-                rdbNacionalConsulta.Enabled = false;
-                rdbImportadoConsulta.Enabled = false;
                 rdbNacionalConsulta.Checked = false;
                 rdbImportadoConsulta.Checked = false;
             }
         }
         private void rdbNacionalConsulta_CheckedChanged(object sender, EventArgs e)
         {
-            if (rdbNacionalConsulta.Checked == true || rdbImportadoConsulta.Checked == true)
-            {
-                btnConsultar.Enabled = true;
-            }
-            else
-            {
-                btnConsultar.Enabled = false;
-            }
+            btnConsultar.Enabled = rdbNacionalConsulta.Checked || rdbImportadoConsulta.Checked;
         }
         private void rdbImportadoConsulta_CheckedChanged(object sender, EventArgs e)
         {
-            if (rdbNacionalConsulta.Checked == true || rdbImportadoConsulta.Checked == true)
-            {
-                btnConsultar.Enabled = true;
-            }
-            else
-            {
-                btnConsultar.Enabled = false;
-            }
+            btnConsultar.Enabled = rdbNacionalConsulta.Checked || rdbImportadoConsulta.Checked;
         }
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-            //mostrar los datos en el listbox lstConsultas solo los que coincidan con la consulta
             lstConsultas.Items.Clear();
             marca = cmbMarcaConsulta.Text;
-            if (rdbNacionalConsulta.Checked == true)
-            {
-                origen = "(N) Nacional";
-            }
-            else
-            {
-                origen = "(I) Importado";
-            }
+            origen = rdbNacionalConsulta.Checked ? "(N) Nacional" : "(I) Importado";
             for (int i = 0; i < contador; i++)
             {
                 if (repuestos[i].Contains(marca) && repuestos[i].Contains(origen))
-                {
                     lstConsultas.Items.Add(repuestos[i]);
-                }
             }
-            //mostrar error si no hay repuestos que coincidan con la consulta
             if (lstConsultas.Items.Count == 0)
-            {
                 MessageBox.Show("No se encontraron repuestos que coincidan con la consulta.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
-        private void CargadorDatos()
+private void CargadorDatos()
         {
             // Fila 0
             matRespuesto[0, 0] = "TechNova";

@@ -137,7 +137,7 @@
             grpDatosRepuestos.Controls.Add(lblNumero);
             grpDatosRepuestos.Location = new Point(6, 6);
             grpDatosRepuestos.Name = "grpDatosRepuestos";
-            grpDatosRepuestos.Size = new Size(331, 418);
+            grpDatosRepuestos.Size = new Size(548, 490);
             grpDatosRepuestos.TabIndex = 0;
             grpDatosRepuestos.TabStop = false;
             grpDatosRepuestos.Text = "Datos de los repuestos";
@@ -180,7 +180,7 @@
             // btnCancelar
             // 
             btnCancelar.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnCancelar.Location = new Point(110, 368);
+            btnCancelar.Location = new Point(340, 449);
             btnCancelar.Name = "btnCancelar";
             btnCancelar.Size = new Size(98, 35);
             btnCancelar.TabIndex = 7;
@@ -191,7 +191,7 @@
             // btnGuardar
             // 
             btnGuardar.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnGuardar.Location = new Point(214, 368);
+            btnGuardar.Location = new Point(444, 449);
             btnGuardar.Name = "btnGuardar";
             btnGuardar.Size = new Size(98, 35);
             btnGuardar.TabIndex = 6;
@@ -241,7 +241,7 @@
             tbcVentanas.Location = new Point(12, 12);
             tbcVentanas.Name = "tbcVentanas";
             tbcVentanas.SelectedIndex = 0;
-            tbcVentanas.Size = new Size(351, 458);
+            tbcVentanas.Size = new Size(568, 530);
             tbcVentanas.TabIndex = 0;
             // 
             // tbpDatos
@@ -250,7 +250,7 @@
             tbpDatos.Location = new Point(4, 24);
             tbpDatos.Name = "tbpDatos";
             tbpDatos.Padding = new Padding(3);
-            tbpDatos.Size = new Size(343, 430);
+            tbpDatos.Size = new Size(560, 502);
             tbpDatos.TabIndex = 0;
             tbpDatos.Text = "Datos";
             tbpDatos.UseVisualStyleBackColor = true;
@@ -261,7 +261,7 @@
             tbpConsultas.Location = new Point(4, 24);
             tbpConsultas.Name = "tbpConsultas";
             tbpConsultas.Padding = new Padding(3);
-            tbpConsultas.Size = new Size(343, 430);
+            tbpConsultas.Size = new Size(560, 502);
             tbpConsultas.TabIndex = 1;
             tbpConsultas.Text = "Consultas";
             tbpConsultas.UseVisualStyleBackColor = true;
@@ -277,7 +277,7 @@
             grpConsultar.Controls.Add(lblOrigenConsulta);
             grpConsultar.Location = new Point(6, 6);
             grpConsultar.Name = "grpConsultar";
-            grpConsultar.Size = new Size(331, 418);
+            grpConsultar.Size = new Size(548, 490);
             grpConsultar.TabIndex = 0;
             grpConsultar.TabStop = false;
             grpConsultar.Text = "Consultar";
@@ -289,13 +289,13 @@
             lstConsultas.ItemHeight = 30;
             lstConsultas.Location = new Point(6, 196);
             lstConsultas.Name = "lstConsultas";
-            lstConsultas.Size = new Size(319, 214);
+            lstConsultas.Size = new Size(536, 274);
             lstConsultas.TabIndex = 4;
             // 
             // btnConsultar
             // 
             btnConsultar.Font = new Font("Segoe UI", 15.75F);
-            btnConsultar.Location = new Point(201, 149);
+            btnConsultar.Location = new Point(418, 149);
             btnConsultar.Name = "btnConsultar";
             btnConsultar.Size = new Size(124, 41);
             btnConsultar.TabIndex = 3;
@@ -307,7 +307,7 @@
             // 
             rdbImportadoConsulta.AutoSize = true;
             rdbImportadoConsulta.Font = new Font("Segoe UI", 15.75F);
-            rdbImportadoConsulta.Location = new Point(197, 109);
+            rdbImportadoConsulta.Location = new Point(88, 109);
             rdbImportadoConsulta.Name = "rdbImportadoConsulta";
             rdbImportadoConsulta.Size = new Size(128, 34);
             rdbImportadoConsulta.TabIndex = 2;
@@ -320,7 +320,7 @@
             // 
             rdbNacionalConsulta.AutoSize = true;
             rdbNacionalConsulta.Font = new Font("Segoe UI", 15.75F);
-            rdbNacionalConsulta.Location = new Point(197, 69);
+            rdbNacionalConsulta.Location = new Point(88, 69);
             rdbNacionalConsulta.Name = "rdbNacionalConsulta";
             rdbNacionalConsulta.Size = new Size(113, 34);
             rdbNacionalConsulta.TabIndex = 1;
@@ -366,51 +366,60 @@
             tbpGrilla.Location = new Point(4, 24);
             tbpGrilla.Name = "tbpGrilla";
             tbpGrilla.Padding = new Padding(3);
-            tbpGrilla.Size = new Size(343, 430);
+            tbpGrilla.Size = new Size(560, 502);
             tbpGrilla.TabIndex = 2;
             tbpGrilla.Text = "Grilla";
             tbpGrilla.UseVisualStyleBackColor = true;
             // 
             // dgvGrilla
             // 
+            dgvGrilla.AllowUserToAddRows = false;
+            dgvGrilla.AllowUserToDeleteRows = false;
             dgvGrilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgvGrilla.Columns.AddRange(new DataGridViewColumn[] { Column1, Column2, Column3, Column4, Column5 });
             dgvGrilla.Location = new Point(6, 6);
             dgvGrilla.Name = "dgvGrilla";
-            dgvGrilla.Size = new Size(331, 409);
+            dgvGrilla.ReadOnly = true;
+            dgvGrilla.Size = new Size(545, 487);
             dgvGrilla.TabIndex = 0;
             // 
             // Column1
             // 
             Column1.HeaderText = "Marca";
             Column1.Name = "Column1";
+            Column1.ReadOnly = true;
             // 
             // Column2
             // 
             Column2.HeaderText = "Origen";
             Column2.Name = "Column2";
+            Column2.ReadOnly = true;
             // 
             // Column3
             // 
             Column3.HeaderText = "Numero";
             Column3.Name = "Column3";
+            Column3.ReadOnly = true;
             // 
             // Column4
             // 
             Column4.HeaderText = "Precio";
             Column4.Name = "Column4";
+            Column4.ReadOnly = true;
             // 
             // Column5
             // 
             Column5.HeaderText = "Descripcion";
             Column5.Name = "Column5";
+            Column5.ReadOnly = true;
             // 
             // frmPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(374, 481);
+            ClientSize = new Size(590, 554);
             Controls.Add(tbcVentanas);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "frmPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
